@@ -12,7 +12,7 @@ func ReadMessage(outChan chan []string, conn *websocket.Conn) error {
 	for {
 		_, msg, err := conn.ReadMessage()
 		if err != nil {
-			slog.Error("readMessage: error reading message", err)
+			slog.Error(fmt.Sprintf("readMessage: error reading message: %v", err))
 			return err
 		}
 

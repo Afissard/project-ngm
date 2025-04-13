@@ -21,7 +21,7 @@ func StartConnection(host string, inChan, outChan chan []string) error {
 
 	conn, _, err := websocket.DefaultDialer.Dial(u.String(), nil)
 	if err != nil {
-		slog.Error("Dial error:", err)
+		slog.Error(fmt.Sprintf("StartConnection: Dial error: %v", err))
 		return nil
 	}
 	defer conn.Close()

@@ -20,7 +20,7 @@ func WriteMessage(inChan chan []string, conn *websocket.Conn) error {
 		for i := 0; i < len(msg); i++ {
 			err := conn.WriteMessage(websocket.TextMessage, []byte(msg[0]))
 			if err != nil {
-				slog.Error("writeMessage: error writing message", err)
+				slog.Error(fmt.Sprintf("writeMessage: error writing message: %v", err))
 				return err
 			}
 			slog.Info(fmt.Sprintf("writeMessage: sent:\t%s", msg[0]))
