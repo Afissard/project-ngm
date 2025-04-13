@@ -16,11 +16,15 @@ func WriteMessage(inChan chan []string, conn *websocket.Conn) error {
 			slog.Error("writeMessage: channel closed")
 			return fmt.Errorf("channel closed")
 		}
-
-		err := conn.WriteMessage(websocket.TextMessage, []byte(msg[0]))
-		if err != nil {
-			slog.Error("writeMessage: error writing message", err)
-			return err
+		
+		for i := 0; i < len(msg); i++ {
+			err := conn.WriteMessage(websocket.TextMessage, []byte(msg[0]))
+			if err != nil {
+				slog.Error("writeMessage: error writing message", err)
+				return err
+			}
+			slog.Info(fmt.Sprintf("writeMessage: sent:\t%s", msg[0]))
 		}
+		
 	}
 }

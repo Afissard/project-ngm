@@ -26,6 +26,8 @@ func StartConnection(host string, inChan, outChan chan []string) error {
 	}
 	defer conn.Close()
 
+	slog.Info("Connected to server")
+
 	go WriteMessage(inChan, conn)
 	ReadMessage(outChan, conn)
 

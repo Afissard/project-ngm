@@ -1,6 +1,7 @@
 package pigeon
 
 import (
+	"fmt"
 	"log/slog"
 
 	"github.com/gorilla/websocket"
@@ -17,6 +18,6 @@ func ReadMessage(outChan chan []string, conn *websocket.Conn) error {
 
 		msgReceived := string(msg[:])
 		outChan <- []string{msgReceived}
-		slog.Info("readMessage: message received", "message", msgReceived)
+		slog.Info(fmt.Sprintf("readMessage: received:\t%s", msgReceived))
 	}
 }
