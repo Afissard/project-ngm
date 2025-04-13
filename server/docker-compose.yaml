@@ -1,0 +1,13 @@
+services:
+  elixir_server:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "4000:4000" # Map container port 4000 to host port 4000
+    volumes:
+      - .:/app # Mount the current directory to the container for live updates
+    environment:
+      MIX_ENV: dev # Set the environment to development
+    stdin_open: true
+    tty: true

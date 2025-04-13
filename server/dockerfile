@@ -1,0 +1,30 @@
+# Use the official Elixir image as the base image
+FROM elixir:1.18-alpine AS build
+# Set environment variables to ensure Elixir runs in a non-interactive mode
+ENV MIX_ENV=prod \
+    LANG=C.UTF-8 \
+    LC_ALL=C.UTF-8
+# Install dependencies for building Elixir applications
+RUN apk add --no-cache build-base git nodejs npm
+
+# Install Hex and Rebar (Elixir build tools)
+RUN mix local.hex --force && \
+    mix local.rebar --force
+
+# Set the working directory inside the container
+WORKDIR /app
+
+# Copy the application code into the container
+COPY . .
+
+# Install dependencies
+RUN mix deps.get
+
+# Compile the application
+RUN mix compile
+
+# Expose the port your Elixir server runs on (default Phoenix port is 4000)
+EXPOSE 4000
+
+# Set the default command to run the Elixir server
+CMD ["elixir", "--sname", "server", "-S", "mix", "run", "--no-halt"]
